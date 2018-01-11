@@ -4,26 +4,23 @@ var connect = require('connect')
 var request = require('supertest')
 var assert = require('assert')
 
-function makeApp () {
+function app () {
   var result = connect()
-
-  result.use(referrerPolicy.apply(this, arguments))
-
+  result.use(referrerPolicy.apply(null, arguments))
   result.use(function (req, res) {
     res.end('Hello world!')
   })
-
   return result
 }
 
 describe('referrerPolicy', function () {
   it('sets header to no-referrer when passed no arguments', function (done) {
-    request(makeApp()).get('/')
+    request(app()).get('/')
     .expect('Referrer-Policy', 'no-referrer', done)
   })
 
   it('sets header to no-referrer when passed no policy', function (done) {
-    request(makeApp({})).get('/')
+    request(app({})).get('/')
     .expect('Referrer-Policy', 'no-referrer', done)
   })
 
@@ -39,7 +36,7 @@ describe('referrerPolicy', function () {
     ''
   ].forEach(function (policy) {
     it('can set the header to "' + policy + '"', function (done) {
-      request(makeApp({ policy: policy })).get('/')
+      request(app({ policy: policy })).get('/')
         .expect('Referrer-Policy', policy, done)
     })
   })
