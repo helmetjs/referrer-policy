@@ -14,14 +14,14 @@ function app () {
 }
 
 describe('referrerPolicy', function () {
-  it('sets header to no-referrer when passed no arguments', function (done) {
-    request(app()).get('/')
-    .expect('Referrer-Policy', 'no-referrer', done)
+  it('sets header to no-referrer when passed no arguments', function () {
+    return request(app()).get('/')
+      .expect('Referrer-Policy', 'no-referrer')
   })
 
-  it('sets header to no-referrer when passed no policy', function (done) {
-    request(app({})).get('/')
-    .expect('Referrer-Policy', 'no-referrer', done)
+  it('sets header to no-referrer when passed no policy', function () {
+    return request(app({})).get('/')
+      .expect('Referrer-Policy', 'no-referrer')
   })
 
   ;[
@@ -35,9 +35,9 @@ describe('referrerPolicy', function () {
     'unsafe-url',
     ''
   ].forEach(function (policy) {
-    it('can set the header to "' + policy + '"', function (done) {
-      request(app({ policy: policy })).get('/')
-        .expect('Referrer-Policy', policy, done)
+    it('can set the header to "' + policy + '"', function () {
+      return request(app({ policy: policy })).get('/')
+        .expect('Referrer-Policy', policy)
     })
   })
 
