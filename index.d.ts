@@ -1,10 +1,23 @@
-import * as http from 'http'
+import * as http from "http";
 
 interface IReferrerPolicyOptions {
-  policy?: 'no-referrer' | 'no-referrer-when-downgrade' | 'same-origin' | 'origin' | 'strict-origin' | 'origin-when-cross-origin' | 'strict-origin-when-cross-origin' | 'unsafe-url' | ''
+  policy?:
+    "no-referrer" |
+    "no-referrer-when-downgrade" |
+    "same-origin" |
+    "origin" |
+    "strict-origin" |
+    "origin-when-cross-origin" |
+    "strict-origin-when-cross-origin" |
+    "unsafe-url" |
+    "";
 }
 
-declare function referrerPolicy (options?: IReferrerPolicyOptions):
-  (req: http.IncomingMessage, res: http.ServerResponse, next: Function) => void
+interface NextFunction {
+  (err?: any): void;
+}
 
-export = referrerPolicy
+declare function referrerPolicy(options?: IReferrerPolicyOptions):
+  (req: http.IncomingMessage, res: http.ServerResponse, next: NextFunction) => void;
+
+export = referrerPolicy;
