@@ -19,14 +19,19 @@
   },
   "bugs": "https://github.com/helmetjs/referrer-policy/issues",
   "scripts": {
-    "pretest": "standard --fix",
-    "test": "mocha"
+    "lint": "standard --fix",
+    "test:js": "mocha",
+    "test:ts": "tsc --noEmit --project test/typescript",
+    "pretest": "npm run lint",
+    "test": "npm run test:js && npm run test:ts"
   },
   "devDependencies": {
+    "@types/connect": "^3.4.31",
     "connect": "^3.6.5",
     "mocha": "^4.1.0",
     "standard": "^10.0.3",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "typescript": "^2.8.1"
   },
   "standard": {
     "globals": [
