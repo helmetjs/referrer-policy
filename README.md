@@ -11,7 +11,7 @@ The [Referer HTTP header](https://en.wikipedia.org/wiki/HTTP_referer) is typical
 Usage:
 
 ```javascript
-var referrerPolicy = require('referrer-policy')
+const referrerPolicy = require('referrer-policy')
 
 app.use(referrerPolicy({ policy: 'same-origin' }))
 // Referrer-Policy: same-origin
