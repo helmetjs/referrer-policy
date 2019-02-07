@@ -63,7 +63,7 @@ describe('referrerPolicy', function () {
   })
 
   it('names its function and middleware', function () {
-    assert.equal(referrerPolicy.name, 'referrerPolicy')
-    assert.equal(referrerPolicy.name, referrerPolicy().name)
+    assert.strictEqual(referrerPolicy.name, 'referrerPolicy')
+    assert.strictEqual(referrerPolicy.name, referrerPolicy().name)
   })
 })
