@@ -2,7 +2,7 @@
   "name": "referrer-policy",
   "author": "Evan Hahn <me@evanhahn.com> (https://evanhahn.com)",
   "description": "Middleware to set the Referrer-Policy HTTP header",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "license": "MIT",
   "keywords": [
     "helmet",
