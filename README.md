@@ -17,6 +17,11 @@ app.use(referrerPolicy({ policy: 'same-origin' }))
 app.use(referrerPolicy({ policy: 'unsafe-url' }))
 // Referrer-Policy: unsafe-url
 
+app.use(referrerPolicy({
+  policy: ['no-referrer', 'unsafe-url']
+}))
+// Referrer-Policy: no-referrer,unsafe-url
+
 app.use(referrerPolicy())
 // Referrer-Policy: no-referrer
 ```

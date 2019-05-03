@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+### Added
+- Added a README example for setting multiple values
+
 ## 1.2.0 - 2019-05-03
 ### Added
 - Allow multiple values to be set. See [#7](https://github.com/helmetjs/referrer-policy/issues/7)
