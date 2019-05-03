@@ -18,6 +18,9 @@
     "url": "git://github.com/helmetjs/referrer-policy.git"
   },
   "bugs": "https://github.com/helmetjs/referrer-policy/issues",
+  "engines": {
+    "node": ">=4.0.0"
+  },
   "scripts": {
     "pretest": "npm run lint",
     "prepublishOnly": "npm run build",
