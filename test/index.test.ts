@@ -35,12 +35,12 @@ describe('referrerPolicy', function () {
     'unsafe-url',
     ''
   ].forEach(function (policy) {
-    it('can set the header to "' + policy + '" by specifying it as a string', function () {
+    it(`can set the header to "${policy}" by specifying it as a string`, function () {
       return request(app(referrerPolicy({ policy }))).get('/')
         .expect('Referrer-Policy', policy)
     })
 
-    it('can set the header to "' + policy + '" by specifying it as an array', function () {
+    it(`can set the header to "${policy}" by specifying it as an array string`, function () {
       return request(app(referrerPolicy({ policy: [policy] }))).get('/')
         .expect('Referrer-Policy', policy)
     })
