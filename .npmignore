@@ -1,2 +1,8 @@
-test
-.travis.yml
+/index.ts
+/tsconfig.json
+/eslintrc.json
+
+/test/
+/.travis.yml
+/dist/**/*.js.map
+/dist/test/
