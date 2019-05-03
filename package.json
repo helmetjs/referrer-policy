@@ -13,6 +13,7 @@
     "referrer",
     "privacy"
   ],
+  "homepage": "https://helmetjs.github.io/docs/referrer-policy/",
   "repository": {
     "type": "git",
     "url": "git://github.com/helmetjs/referrer-policy.git"
