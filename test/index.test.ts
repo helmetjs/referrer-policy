@@ -35,10 +35,20 @@ describe('referrerPolicy', function () {
     'unsafe-url',
     ''
   ].forEach(function (policy) {
-    it('can set the header to "' + policy + '"', function () {
+    it('can set the header to "' + policy + '" by specifying it as a string', function () {
       return request(app(referrerPolicy({ policy }))).get('/')
         .expect('Referrer-Policy', policy)
     })
+
+    it('can set the header to "' + policy + '" by specifying it as an array', function () {
+      return request(app(referrerPolicy({ policy: [policy] }))).get('/')
+        .expect('Referrer-Policy', policy)
+    })
+  })
+
+  it('can set an array with multiple values', function () {
+    return request(app(referrerPolicy({ policy: ['origin', 'unsafe-url'] }))).get('/')
+      .expect('Referrer-Policy', 'origin,unsafe-url')
   })
 
   describe('with bad input', function () {
@@ -51,8 +61,12 @@ describe('referrerPolicy', function () {
       expect(referrerPolicy.bind(null, { policy: null as any })).toThrow()
       expect(referrerPolicy.bind(null, { policy: undefined as any })).toThrow()
       expect(referrerPolicy.bind(null, { policy: {} as any })).toThrow()
-      expect(referrerPolicy.bind(null, { policy: ['same-origin'] as any })).toThrow()
       /* eslint-enable @typescript-eslint/no-explicit-any */
+    })
+
+    it('fails with duplicate values', function () {
+      expect(referrerPolicy.bind(null, { policy: ['origin', 'origin'] })).toThrow()
+      expect(referrerPolicy.bind(null, { policy: ['same-origin', 'origin', 'same-origin'] })).toThrow()
     })
   })
 

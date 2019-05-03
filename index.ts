@@ -21,24 +21,34 @@ const ALLOWED_POLICIES_ERROR_LIST = ALLOWED_POLICIES.map(function (policy) {
 }).join(', ')
 
 interface ReferrerPolicyOptions {
-  policy?: string;
+  policy?: string | string[];
 }
 
 export = function referrerPolicy (options?: ReferrerPolicyOptions) {
   options = options || {}
 
-  let policy: unknown
+  let policyOption: unknown
   if ('policy' in options) {
-    policy = options.policy
+    policyOption = options.policy
   } else {
-    policy = DEFAULT_POLICY
+    policyOption = DEFAULT_POLICY
   }
 
-  if ((typeof policy !== 'string') || (ALLOWED_POLICIES.indexOf(policy) === -1)) {
-    throw new Error('"' + policy + '" is not a valid policy. Allowed policies: ' + ALLOWED_POLICIES_ERROR_LIST + '.')
-  }
+  const policies: unknown[] = Array.isArray(policyOption) ? policyOption : [policyOption]
 
-  const headerValue: string = policy;
+  const policiesSeen: Set<string> = new Set()
+  policies.forEach((policy) => {
+    if ((typeof policy !== 'string') || (ALLOWED_POLICIES.indexOf(policy) === -1)) {
+      throw new Error('"' + policy + '" is not a valid policy. Allowed policies: ' + ALLOWED_POLICIES_ERROR_LIST + '.')
+    }
+
+    if (policiesSeen.has(policy)) {
+      throw new Error('"' + policy + '" specified more than once. No duplicates are allowed.')
+    }
+    policiesSeen.add(policy)
+  })
+
+  const headerValue: string = policies.join(',');
 
   return function referrerPolicy (_req: IncomingMessage, res: ServerResponse, next: () => void) {
     res.setHeader('Referrer-Policy', headerValue)
