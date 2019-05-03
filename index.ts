@@ -29,6 +29,10 @@ function getHeaderValueFromOptions(options?: ReferrerPolicyOptions): string {
 
   const policies: unknown[] = Array.isArray(policyOption) ? policyOption : [policyOption]
 
+  if (policies.length === 0) {
+    throw new Error('At least one policy must be supplied.')
+  }
+
   const policiesSeen: Set<string> = new Set()
   policies.forEach((policy) => {
     if ((typeof policy !== 'string') || (ALLOWED_POLICIES.indexOf(policy) === -1)) {

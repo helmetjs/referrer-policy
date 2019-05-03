@@ -64,6 +64,10 @@ describe('referrerPolicy', function () {
       /* eslint-enable @typescript-eslint/no-explicit-any */
     })
 
+    it('fails with an empty array', function () {
+      expect(referrerPolicy.bind(null, { policy: [] })).toThrow()
+    });
+
     it('fails with duplicate values', function () {
       expect(referrerPolicy.bind(null, { policy: ['origin', 'origin'] })).toThrow()
       expect(referrerPolicy.bind(null, { policy: ['same-origin', 'origin', 'same-origin'] })).toThrow()
