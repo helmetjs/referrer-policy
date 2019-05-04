@@ -1,11 +1,11 @@
-import { IncomingMessage, ServerResponse } from 'http'
+import { IncomingMessage, ServerResponse } from 'http';
 
 interface ReferrerPolicyOptions {
   policy?: string | string[];
 }
 
-function getHeaderValueFromOptions(options?: ReferrerPolicyOptions): string {
-  const DEFAULT_POLICY = 'no-referrer'
+function getHeaderValueFromOptions (options?: ReferrerPolicyOptions): string {
+  const DEFAULT_POLICY = 'no-referrer';
   const ALLOWED_POLICIES: string[] = [
     'no-referrer',
     'no-referrer-when-downgrade',
@@ -15,51 +15,51 @@ function getHeaderValueFromOptions(options?: ReferrerPolicyOptions): string {
     'origin-when-cross-origin',
     'strict-origin-when-cross-origin',
     'unsafe-url',
-    ''
-  ]
+    '',
+  ];
 
-  options = options || {}
+  options = options || {};
 
-  let policyOption: unknown
+  let policyOption: unknown;
   if ('policy' in options) {
-    policyOption = options.policy
+    policyOption = options.policy;
   } else {
-    policyOption = DEFAULT_POLICY
+    policyOption = DEFAULT_POLICY;
   }
 
-  const policies: unknown[] = Array.isArray(policyOption) ? policyOption : [policyOption]
+  const policies: unknown[] = Array.isArray(policyOption) ? policyOption : [policyOption];
 
   if (policies.length === 0) {
-    throw new Error('At least one policy must be supplied.')
+    throw new Error('At least one policy must be supplied.');
   }
 
-  const policiesSeen: Set<string> = new Set()
+  const policiesSeen: Set<string> = new Set();
   policies.forEach((policy) => {
-    if ((typeof policy !== 'string') || (ALLOWED_POLICIES.indexOf(policy) === -1)) {
+    if (typeof policy !== 'string' || ALLOWED_POLICIES.indexOf(policy) === -1) {
       const allowedPoliciesErrorList = ALLOWED_POLICIES.map((policy) => {
         if (policy.length) {
-          return `"${policy}"`
+          return `"${policy}"`;
         } else {
-          return 'and the empty string'
+          return 'and the empty string';
         }
-      }).join(', ')
-      throw new Error(`"${policy}" is not a valid policy. Allowed policies: ${allowedPoliciesErrorList}.`)
+      }).join(', ');
+      throw new Error(`"${policy}" is not a valid policy. Allowed policies: ${allowedPoliciesErrorList}.`);
     }
 
     if (policiesSeen.has(policy)) {
-      throw new Error(`"${policy}" specified more than once. No duplicates are allowed.`)
+      throw new Error(`"${policy}" specified more than once. No duplicates are allowed.`);
     }
-    policiesSeen.add(policy)
-  })
+    policiesSeen.add(policy);
+  });
 
   return policies.join(',');
 }
 
 export = function referrerPolicy (options?: ReferrerPolicyOptions) {
-  const headerValue = getHeaderValueFromOptions(options)
+  const headerValue = getHeaderValueFromOptions(options);
 
   return function referrerPolicy (_req: IncomingMessage, res: ServerResponse, next: () => void) {
-    res.setHeader('Referrer-Policy', headerValue)
-    next()
-  }
+    res.setHeader('Referrer-Policy', headerValue);
+    next();
+  };
 }
